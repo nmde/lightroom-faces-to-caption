@@ -8,5 +8,11 @@ return {
         minor = 0,
         revision = 0,
         build = 0
+    },
+    LrLibraryMenuItems = {
+        {
+            title = "Faces to Caption",
+            file = "main.lua"
+        }
     }
 }
