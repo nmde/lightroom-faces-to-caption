@@ -2,7 +2,7 @@ local LrTasks = import("LrTasks")
 local LrApplication = import("LrApplication")
 local LrLogger = import("LrLogger")
 local LrDialogs = import("LrDialogs")
-local FacesToCaption = import("./FacesToCaption")
+local FacesToCaption = require("FacesToCaption")
 
 local logger = LrLogger("FacesToCaptionPlugin")
 logger:enable("print")
