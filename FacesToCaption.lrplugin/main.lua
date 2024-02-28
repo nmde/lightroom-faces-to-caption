@@ -1,20 +1,15 @@
-local LrTasks = import("LrTasks")
-local LrApplication = import("LrApplication")
-local LrLogger = import("LrLogger")
-local LrDialogs = import("LrDialogs")
+local LrApplication = import 'LrApplication'
+local LrDialogs = import 'LrDialogs'
+local LrTasks = import 'LrTasks'
 local FacesToCaption = require("FacesToCaption")
 
-local logger = LrLogger("FacesToCaptionPlugin")
-logger:enable("print")
-
-LrTasks.startAsyncTask(function ()
+LrTasks.startAsyncTask(function()
     local catalog = LrApplication.activeCatalog()
-    local photo = catalog:getTargetPhoto()
+    local photo = catalog:getTargetPhotos()
     if photo == nil then
-        LrDialogs.message("Faces to Caption", "Please select a photo before running Faces to Caption.")
-    else
-        catalog:withWriteAccessDo("Write Faces to Caption", function () 
-            FacesToCaption(photo.getFormattedMetadata('path'), logger.quickf('info'))
-        end)
+        LrDialogs.message("Faces to Caption", "Please select a photo")
+        return
     end
+    local filename = photo:getFormattedMetadata("fileName")
+    FacesToCaption(filename, print)
 end)

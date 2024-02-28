@@ -34,16 +34,11 @@ end
 
 local tempFile = "temp.txt"
 local outputFile = "output.txt"
-function FacesToCaption(fileName, log)
-    function execute(command)
-        log(command)
-        os.execute(command)
-    end
-
+function FacesToCaption(fileName)
     if file_exists(tempFile) then
         os.remove(tempFile)
     end
-    execute("exiftool  " .. fileName .. " >> " .. tempFile)
+    os.execute("exiftool  " .. fileName .. " >> " .. tempFile)
     local output = io.open(tempFile)
     local line = output:read()
     local people = {}
@@ -72,12 +67,11 @@ function FacesToCaption(fileName, log)
     local caption = ""
     custom_sort(people, sort_by_x)
     for i, person in pairs(people) do
-        log("Person: " .. person.name .. " (" .. person.x .. ")")
         caption = caption .. ', ' .. person.name
     end
     caption = string.sub(caption, 3, string.len(caption))
-    execute("exiftool -overwrite_original -iptc:Caption-Abstract=\"" .. caption .. "\" -Description=\"" .. caption .. "\" "  .. fileName)
-    execute("exiftool  " .. fileName .. " >> " .. outputFile)
+    os.execute("exiftool -overwrite_original -iptc:Caption-Abstract=\"" .. caption .. "\" -Description=\"" .. caption .. "\" "  .. fileName)
+    os.execute("exiftool  " .. fileName .. " >> " .. outputFile)
     os.remove(tempFile)
 end
 
